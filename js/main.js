@@ -20,12 +20,12 @@ function tagPercent() {
           "linear-gradient(" +
           "90deg" +
           "," +
-          "rgba(65, 181, 81,0,4) " +
+          "rgba(27,204,74,0.8) " +
           per +
           "%" +
           "," +
-          "rgba(189, 61, 47,0.4) " +
-          (per + 3) +
+          "tomato " +
+          (per) +
           "%" +
           ")";
       }
