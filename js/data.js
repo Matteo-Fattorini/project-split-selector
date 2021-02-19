@@ -9,7 +9,7 @@ const percentages = [
   { id: "expressway", per: 60 },
   { id: "powerplant", per: 40 },
   { id: "stormdrain", per: 50 },
-  { id: "canyon", per: 60 },
+  { id: "canyon", per: 70 },
   { id: "quarry", per: 60 },
 ];
 
