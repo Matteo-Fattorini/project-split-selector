@@ -1,6 +1,11 @@
 textAreaEl = document.getElementById("textarea");
 tagContainer = document.querySelector(".tags");
 const tags = document.querySelectorAll(".tag");
+pistoCounter = document.getElementById("puntiP");
+fattoCounter = document.getElementById("puntiM");
+
+let counterP = 0;
+let counterM = 0;
 
 btnEl = document.getElementById("btn");
 let isGoing = false;
@@ -24,8 +29,8 @@ function tagPercent() {
           per +
           "%" +
           "," +
-          "tomato " +
-          (per) +
+          "blue " +
+          per +
           "%" +
           ")";
       }
@@ -81,6 +86,39 @@ document.body.addEventListener("keyup", function (e) {
 
 tags.forEach((e) =>
   e.addEventListener("click", function (t) {
-    console.log(t.target.id);
+    if (e.classList.contains("pistoWon")) {
+      e.classList.remove("pistoWon");
+      counterP--;
+    } else if (e.classList.contains("matteoWon")) {
+      e.classList.remove("matteoWon");
+      e.classList.add("pistoWon");
+      counterM--;
+      counterP++;
+    } else {
+      e.classList.add("pistoWon");
+      counterP++;
+    }
+      pistoCounter.innerHTML = counterP;
+      fattoCounter.innerHTML = counterM;
+  })
+);
+
+tags.forEach((e) =>
+  e.addEventListener("contextmenu", function (t) {
+    t.preventDefault();
+    if (e.classList.contains("matteoWon")) {
+      e.classList.remove("matteoWon");
+      counterM--;
+    } else if (e.classList.contains("pistoWon")) {
+      e.classList.remove("pistoWon");
+      e.classList.add("matteoWon");
+      counterP--;
+      counterM++;
+    } else {
+      e.classList.add("matteoWon");
+      counterM++;
+    }
+    pistoCounter.innerHTML = counterP;
+    fattoCounter.innerHTML = counterM;
   })
 );

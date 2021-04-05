@@ -28,7 +28,10 @@ body {
 }
 
 #subtitle {
-  font-size: 3rem
+  font-size: 3rem;
+  color: black;
+  background-color: white;
+  text-shadow: none;
 }
 
 h3 {
@@ -57,6 +60,14 @@ h3 {
   text-align: center;
   font-weight: bold;
   transition: transform 0.8s ease-in-out;
+  cursor: pointer;
+}
+
+.pistoWon {
+  background-color: blue;
+}
+.matteoWon {
+  background-color: green;
 }
 
 
@@ -72,4 +83,9 @@ h3 {
   margin: 0 5px 20px 0;
   font-size: 14px;
   display: inline-block;
+}
+
+
+#puntiM, #puntiP {
+  color: tomato;
 }
