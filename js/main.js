@@ -126,10 +126,12 @@ function assignPoint(evt) {
 function declareWinner() {
   let winner = counterP > counterM ? "Pisto!!" : "Fatto!!";
   clapping.play();
+  document.body.style.backgroundImage = "unset";
+  document.body.style.backgroundColor = "black";
   tagContainer.style.display = "none";
   subtitle.style.fontSize = "10rem";
   titleText.style.fontSize = "15rem";
-  titleText.style.color = "tomato";
+  titleText.style.color = "white";
   titleText.innerHTML = `Vincitore: ${winner}`;
 }
 
