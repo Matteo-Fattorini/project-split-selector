@@ -1,8 +1,13 @@
 textAreaEl = document.getElementById("textarea");
 tagContainer = document.querySelector(".tags");
-const tags = document.querySelectorAll(".tag");
+tags = document.querySelectorAll(".tag");
+drumRoll = document.getElementById("drumRoll");
+clapping = document.getElementById("clapping");
 pistoCounter = document.getElementById("puntiP");
 fattoCounter = document.getElementById("puntiM");
+subtitle = document.getElementById("subtitle");
+title = document.getElementById("title");
+titleText = document.getElementById("titleText");
 
 let counterP = 0;
 let counterM = 0;
@@ -11,7 +16,9 @@ btnEl = document.getElementById("btn");
 let isGoing = false;
 
 function pickRandomTag() {
-  const unselected = document.querySelectorAll(".unselected");
+  const unselected = document.querySelectorAll(
+    ".unselected:not(.noselectable)"
+  );
 
   return unselected[Math.floor(Math.random() * unselected.length)];
 }
@@ -21,6 +28,7 @@ function tagPercent() {
     percentages.forEach((percent) => {
       if (e.id == percent.id && e.classList.contains("selected")) {
         per = percent.per;
+        e.style.border = "5px solid red";
         e.style.backgroundImage =
           "linear-gradient(" +
           "90deg" +
@@ -49,7 +57,6 @@ function unhighlight(tag) {
 function randomSelector() {
   tags.forEach((el) => (el.style.backgroundImage = "unset"));
   isGoing = true;
-  const drumRoll = document.getElementById("drumRoll");
   drumRoll.play();
   const times = 94;
   const interval = setInterval(function () {
@@ -84,41 +91,53 @@ document.body.addEventListener("keyup", function (e) {
   }
 });
 
-tags.forEach((e) =>
-  e.addEventListener("click", function (t) {
-    if (e.classList.contains("pistoWon")) {
-      e.classList.remove("pistoWon");
-      counterP--;
-    } else if (e.classList.contains("matteoWon")) {
-      e.classList.remove("matteoWon");
-      e.classList.add("pistoWon");
-      counterM--;
-      counterP++;
-    } else {
-      e.classList.add("pistoWon");
-      counterP++;
-    }
-      pistoCounter.innerHTML = counterP;
-      fattoCounter.innerHTML = counterM;
-  })
-);
+function removeClasses(e) {
+  e.classList.remove("pistoWon");
+  e.classList.remove("matteoWon");
+  e.classList.remove("noselectable");
+  e.classList.add("unselected");
+}
 
-tags.forEach((e) =>
-  e.addEventListener("contextmenu", function (t) {
-    t.preventDefault();
-    if (e.classList.contains("matteoWon")) {
-      e.classList.remove("matteoWon");
-      counterM--;
-    } else if (e.classList.contains("pistoWon")) {
-      e.classList.remove("pistoWon");
-      e.classList.add("matteoWon");
-      counterP--;
+function assignPoint(evt) {
+  evt.preventDefault();
+  evt.target.style.backgroundImage = "unset";
+  evt.target.classList.remove("selected");
+  if (evt.target.classList.contains("pistoWon")) {
+    evt.target.classList.remove("pistoWon");
+    counterP--;
+  } else if (evt.target.classList.contains("matteoWon")) {
+    evt.target.classList.remove("matteoWon");
+    counterM--;
+  } else {
+    if (evt.type == "contextmenu") {
+      evt.target.classList.add("matteoWon");
       counterM++;
-    } else {
-      e.classList.add("matteoWon");
-      counterM++;
+    } else if (evt.type == "click") {
+      evt.target.classList.add("pistoWon");
+      counterP++;
     }
-    pistoCounter.innerHTML = counterP;
-    fattoCounter.innerHTML = counterM;
-  })
-);
+  }
+  pistoCounter.innerHTML = counterP;
+  fattoCounter.innerHTML = counterM;
+  checkForWinner();
+}
+
+tags.forEach((e) => e.addEventListener("click", assignPoint));
+tags.forEach((e) => e.addEventListener("contextmenu", assignPoint));
+
+function checkForWinner() {
+  if (counterP + counterM == 12) {
+    if (counterP == counterM) {
+      tags.forEach((e) => removeClasses(e));
+      randomSelector();
+    } else {
+      let winner = counterP > counterM ? "Pisto!!" : "Fatto!!";
+      clapping.play();
+      tagContainer.style.display = "none";
+      subtitle.style.fontSize = "10rem";
+      titleText.style.fontSize = "15rem";
+      titleText.style.color = "tomato";
+      titleText.innerHTML = `Vincitore: ${winner}`;
+    }
+  }
+}
