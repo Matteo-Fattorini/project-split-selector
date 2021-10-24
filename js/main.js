@@ -8,12 +8,13 @@ fattoCounter = document.getElementById("puntiM");
 subtitle = document.getElementById("subtitle");
 title = document.getElementById("title");
 titleText = document.getElementById("titleText");
+btnEl = document.getElementById("btn");
 
 let counterP = 0;
 let counterM = 0;
 
-btnEl = document.getElementById("btn");
 let isGoing = false;
+let isEven = false;
 
 function pickRandomTag() {
   const unselected = document.querySelectorAll(
@@ -122,22 +123,27 @@ function assignPoint(evt) {
   checkForWinner();
 }
 
+function declareWinner() {
+  let winner = counterP > counterM ? "Pisto!!" : "Fatto!!";
+  clapping.play();
+  tagContainer.style.display = "none";
+  subtitle.style.fontSize = "10rem";
+  titleText.style.fontSize = "15rem";
+  titleText.style.color = "tomato";
+  titleText.innerHTML = `Vincitore: ${winner}`;
+}
+
 tags.forEach((e) => e.addEventListener("click", assignPoint));
 tags.forEach((e) => e.addEventListener("contextmenu", assignPoint));
 
 function checkForWinner() {
-  if (counterP + counterM == 12) {
+  if (counterP + counterM >= 12) {
     if (counterP == counterM) {
       tags.forEach((e) => removeClasses(e));
+      isEven = true;
       randomSelector();
     } else {
-      let winner = counterP > counterM ? "Pisto!!" : "Fatto!!";
-      clapping.play();
-      tagContainer.style.display = "none";
-      subtitle.style.fontSize = "10rem";
-      titleText.style.fontSize = "15rem";
-      titleText.style.color = "tomato";
-      titleText.innerHTML = `Vincitore: ${winner}`;
+      declareWinner();
     }
   }
 }
