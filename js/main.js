@@ -24,7 +24,7 @@ function pickRandomTag() {
   return unselected[Math.floor(Math.random() * unselected.length)];
 }
 
-function tagPercent() {
+function tagPercent(searchTag = false) {
   tags.forEach((e) => {
     percentages.forEach((percent) => {
       if (e.id == percent.id && e.classList.contains("selected")) {
@@ -43,12 +43,38 @@ function tagPercent() {
           "%" +
           ")";
       }
+      if (searchTag) {
+        if (
+          percent.id == searchTag.id &&
+          searchTag.classList.contains("selected")
+        ) {
+          result = {
+            pistoPercent: 100 - percent.per,
+            fattoPercent: percent.per,
+          };
+        }
+      }
     });
   });
+  if (result) return result;
 }
 
-function highlight(tag) {
+function highlight(tag, last = false) {
   tag.classList.add("selected");
+  if (last) {
+    percentage = tagPercent(tag);
+
+    fattoPercent = document.createElement("span");
+    fattoPercent.classList.add("fattoPercent", "percentBox");
+    fattoPercent.innerText = percentage.fattoPercent;
+
+    pistoPercent = document.createElement("span");
+    pistoPercent.classList.add("pistoPercent", "percentBox");
+    pistoPercent.innerText = percentage.pistoPercent;
+
+    tag.appendChild(pistoPercent);
+    tag.appendChild(fattoPercent);
+  }
 }
 
 function unhighlight(tag) {
@@ -73,7 +99,7 @@ function randomSelector() {
     setTimeout(() => {
       const randomTag = pickRandomTag();
       randomTag.classList.remove("unselected");
-      highlight(randomTag);
+      highlight(randomTag, true);
       isGoing = false;
       tagPercent();
     }, 100);

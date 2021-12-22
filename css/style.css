@@ -63,11 +63,30 @@ h3 {
   font-weight: bold;
   transition: transform 0.8s ease-in-out;
   cursor: pointer;
+  position: relative;
+}
+
+.percentBox {
+  z-index: 100;
+  font-size: 2rem;
+}
+
+.fattoPercent {
+  position: absolute;
+  left: 13px;
+  top: 13px;
+}
+
+.pistoPercent {
+  position: absolute;
+  right: 13px;
+  top: 13px;
 }
 
 .pistoWon {
   background-color: blue;
 }
+
 .matteoWon {
   background-color: green;
 }
@@ -88,6 +107,7 @@ h3 {
 }
 
 
-#puntiM, #puntiP {
+#puntiM,
+#puntiP {
   color: tomato;
 }
