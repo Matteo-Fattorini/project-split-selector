@@ -29,16 +29,26 @@ function tagPercent(searchTag = false) {
     percentages.forEach((percent) => {
       if (e.id == percent.id && e.classList.contains("selected")) {
         per = percent.per;
+
+        colorFatto = `rgb(11, 236, 59) `;
+        colorPisto = `rgb(4, 126, 251) `;
+
+        if (per >= 55) {
+          colorFatto = `rgb(29, 79, 46) `;
+        } else if (per <= 45) {
+          colorPisto = `rgb(11, 46, 82) `;
+        }
+
         e.style.border = "5px solid red";
         e.style.backgroundImage =
           "linear-gradient(" +
           "90deg" +
           "," +
-          "rgba(27,204,74,0.8) " +
+          colorFatto +
           per +
           "%" +
           "," +
-          "blue " +
+          colorPisto +
           per +
           "%" +
           ")";
@@ -56,6 +66,7 @@ function tagPercent(searchTag = false) {
       }
     });
   });
+
   if (result) return result;
 }
 
@@ -86,10 +97,10 @@ function randomSelector() {
   isGoing = true;
   drumRoll.play();
   const times = 94;
-  const interval = setInterval(function () {
+  const interval = setInterval(() => {
     const randomTag = pickRandomTag();
     highlight(randomTag);
-    setTimeout(function () {
+    setTimeout(() => {
       unhighlight(randomTag);
     }, 100);
   }, 100);
