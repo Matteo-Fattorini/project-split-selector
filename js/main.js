@@ -30,28 +30,21 @@ function tagPercent(searchTag = false) {
       if (e.id == percent.id && e.classList.contains("selected")) {
         per = percent.per;
 
-        colorFatto = `rgb(11, 236, 59) `;
-        colorPisto = `rgb(4, 126, 251) `;
+        colorFatto = `rgb(8, 247, 59) `;
+        colorPisto = `rgb(0, 148, 255) `;
 
-        if (per >= 55) {
-          colorFatto = `rgb(29, 79, 46) `;
-        } else if (per <= 45) {
-          colorPisto = `rgb(11, 46, 82) `;
+        if (per >= 55 && per < 60) {
+          colorFatto = `rgb(21, 201, 59) `;
+        } else if (per <= 45 && per > 40) {
+          colorPisto = `rgb(52, 111, 144) `;
+        } else if (per > 60) {
+          colorFatto = `rgb(36, 62, 21) `;
+        } else if (per < 40) {
+          colorPisto = `rgb(13, 40, 94) `;
         }
 
         e.style.border = "5px solid red";
-        e.style.backgroundImage =
-          "linear-gradient(" +
-          "90deg" +
-          "," +
-          colorFatto +
-          per +
-          "%" +
-          "," +
-          colorPisto +
-          per +
-          "%" +
-          ")";
+        e.style.backgroundImage = `linear-gradient(to right, ${colorFatto} ${per}%, ${colorPisto} ${per}%)`;
       }
       if (searchTag) {
         if (
