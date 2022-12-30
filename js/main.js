@@ -34,12 +34,12 @@ function tagPercent(searchTag = false) {
         colorPisto = `rgb(0, 148, 255) `;
 
         if (per >= 55 && per < 60) {
-          colorFatto = `rgb(21, 201, 59) `;
+          colorFatto = `rgb(44, 120, 59) `;
         } else if (per <= 45 && per > 40) {
           colorPisto = `rgb(52, 111, 144) `;
-        } else if (per > 60) {
+        } else if (per >= 60) {
           colorFatto = `rgb(36, 62, 21) `;
-        } else if (per < 40) {
+        } else if (per <= 40) {
           colorPisto = `rgb(13, 40, 94) `;
         }
 
