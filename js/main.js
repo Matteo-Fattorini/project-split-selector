@@ -41,6 +41,9 @@ function tagPercent(searchTag = false) {
           colorFatto = `rgb(36, 62, 21) `;
         } else if (per <= 40) {
           colorPisto = `rgb(13, 40, 94) `;
+        } else {
+          colorFatto = `rgb(0, 0, 0) `;
+          colorPisto = `rgb(0, 0, 0) `;
         }
 
         e.style.border = "5px solid red";
