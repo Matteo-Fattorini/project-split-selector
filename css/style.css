@@ -111,3 +111,11 @@ h3 {
 #puntiP {
   color: tomato;
 }
+
+#version {
+  color: white;
+  font-size: 1rem;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}

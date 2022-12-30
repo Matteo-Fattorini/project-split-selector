@@ -1,3 +1,5 @@
+const version = "2.1.3";
+
 textAreaEl = document.getElementById("textarea");
 tagContainer = document.querySelector(".tags");
 tags = document.querySelectorAll(".tag");
@@ -9,6 +11,9 @@ subtitle = document.getElementById("subtitle");
 title = document.getElementById("title");
 titleText = document.getElementById("titleText");
 btnEl = document.getElementById("btn");
+versionEl = document.getElementById("version");
+
+versionEl.innerText = `v${version}`;
 
 let counterP = 0;
 let counterM = 0;
@@ -36,15 +41,20 @@ function tagPercent(searchTag = false) {
         const per = percent.per;
         let colorFatto = `rgb(8, 247, 59) `;
         let colorPisto = `rgb(0, 148, 255) `;
+        let blackColor = `rgb(0, 0, 0) `;
 
         if (per >= 55 && per < 60) {
           colorFatto = `rgb(44, 120, 59) `;
+          colorPisto = blackColor;
         } else if (per <= 45 && per > 40) {
           colorPisto = `rgb(52, 111, 144) `;
+          colorFatto = blackColor;
         } else if (per >= 60) {
           colorFatto = `rgb(36, 62, 21) `;
+          colorPisto = blackColor;
         } else if (per <= 40) {
           colorPisto = `rgb(13, 40, 94) `;
+          colorFatto = blackColor;
         } else {
           colorFatto = `rgb(0, 0, 0) `;
           colorPisto = `rgb(0, 0, 0) `;
@@ -93,7 +103,6 @@ function highlight(tag, last = false) {
   }
 }
 
-
 function unhighlight(tag) {
   tag.classList.remove("selected");
 }
@@ -123,7 +132,6 @@ function randomSelector() {
   }, 9400);
 }
 
-
 document.body.addEventListener("keyup", (event) => {
   if (event.key === "Enter") {
     tags.forEach((tag) => unhighlight(tag));
@@ -136,7 +144,6 @@ document.body.addEventListener("keyup", (event) => {
     }
   }
 });
-
 
 function removeClasses(e) {
   e.classList.remove("pistoWon");
@@ -172,7 +179,6 @@ function assignPoint(evt) {
   checkForWinner();
 }
 
-
 function declareWinner() {
   const winner = counterP > counterM ? "Pisto!!" : "Fatto!!";
   clapping.play();
@@ -184,7 +190,6 @@ function declareWinner() {
   titleText.style.color = "white";
   titleText.innerHTML = `Vincitore: ${winner}`;
 }
-
 
 tags.forEach((e) => e.addEventListener("click", assignPoint));
 tags.forEach((e) => e.addEventListener("contextmenu", assignPoint));
