@@ -20,18 +20,22 @@ function pickRandomTag() {
   const unselected = document.querySelectorAll(
     ".unselected:not(.noselectable)"
   );
+  const unselectedLength = unselected.length;
 
-  return unselected[Math.floor(Math.random() * unselected.length)];
+  if (unselectedLength === 0) {
+    return null;
+  }
+
+  return unselected[Math.floor(Math.random() * unselectedLength)];
 }
 
 function tagPercent(searchTag = false) {
   tags.forEach((e) => {
     percentages.forEach((percent) => {
-      if (e.id == percent.id && e.classList.contains("selected")) {
-        per = percent.per;
-
-        colorFatto = `rgb(8, 247, 59) `;
-        colorPisto = `rgb(0, 148, 255) `;
+      if (e.id === percent.id && e.classList.contains("selected")) {
+        const per = percent.per;
+        let colorFatto = `rgb(8, 247, 59) `;
+        let colorPisto = `rgb(0, 148, 255) `;
 
         if (per >= 55 && per < 60) {
           colorFatto = `rgb(44, 120, 59) `;
@@ -49,40 +53,46 @@ function tagPercent(searchTag = false) {
         e.style.border = "5px solid red";
         e.style.backgroundImage = `linear-gradient(to right, ${colorFatto} ${per}%, ${colorPisto} ${per}%)`;
       }
-      if (searchTag) {
-        if (
-          percent.id == searchTag.id &&
-          searchTag.classList.contains("selected")
-        ) {
-          result = {
-            pistoPercent: 100 - percent.per,
-            fattoPercent: percent.per,
-          };
-        }
-      }
     });
   });
 
-  if (result) return result;
+  if (searchTag) {
+    const searchTagPercentage = percentages.find(
+      (percent) => percent.id === searchTag.id
+    );
+
+    if (searchTagPercentage && searchTag.classList.contains("selected")) {
+      return {
+        pistoPercent: 100 - searchTagPercentage.per,
+        fattoPercent: searchTagPercentage.per,
+      };
+    }
+  }
+
+  return null;
 }
 
 function highlight(tag, last = false) {
   tag.classList.add("selected");
+
   if (last) {
-    percentage = tagPercent(tag);
+    const percentage = tagPercent(tag);
 
-    fattoPercent = document.createElement("span");
-    fattoPercent.classList.add("fattoPercent", "percentBox");
-    fattoPercent.innerText = percentage.fattoPercent;
+    if (percentage) {
+      const fattoPercent = document.createElement("span");
+      fattoPercent.classList.add("fattoPercent", "percentBox");
+      fattoPercent.innerText = percentage.fattoPercent;
 
-    pistoPercent = document.createElement("span");
-    pistoPercent.classList.add("pistoPercent", "percentBox");
-    pistoPercent.innerText = percentage.pistoPercent;
+      const pistoPercent = document.createElement("span");
+      pistoPercent.classList.add("pistoPercent", "percentBox");
+      pistoPercent.innerText = percentage.pistoPercent;
 
-    tag.appendChild(pistoPercent);
-    tag.appendChild(fattoPercent);
+      tag.appendChild(pistoPercent);
+      tag.appendChild(fattoPercent);
+    }
   }
 }
+
 
 function unhighlight(tag) {
   tag.classList.remove("selected");
@@ -92,7 +102,7 @@ function randomSelector() {
   tags.forEach((el) => (el.style.backgroundImage = "unset"));
   isGoing = true;
   drumRoll.play();
-  const times = 94;
+
   const interval = setInterval(() => {
     const randomTag = pickRandomTag();
     highlight(randomTag);
@@ -110,12 +120,14 @@ function randomSelector() {
       isGoing = false;
       tagPercent();
     }, 100);
-  }, times * 100);
+  }, 9400);
 }
 
-document.body.addEventListener("keyup", function (e) {
-  if (e.key === "Enter") {
-    tags.forEach((e) => unhighlight(e));
+
+document.body.addEventListener("keyup", (event) => {
+  if (event.key === "Enter") {
+    tags.forEach((tag) => unhighlight(tag));
+
     if (!isGoing) {
       const unselected = document.querySelectorAll(".unselected");
       if (unselected.length > 1) {
@@ -124,6 +136,7 @@ document.body.addEventListener("keyup", function (e) {
     }
   }
 });
+
 
 function removeClasses(e) {
   e.classList.remove("pistoWon");
@@ -134,30 +147,34 @@ function removeClasses(e) {
 
 function assignPoint(evt) {
   evt.preventDefault();
-  evt.target.style.backgroundImage = "unset";
-  evt.target.classList.remove("selected");
-  if (evt.target.classList.contains("pistoWon")) {
-    evt.target.classList.remove("pistoWon");
+  const { target } = evt;
+  target.style.backgroundImage = "unset";
+  target.classList.remove("selected");
+
+  if (target.classList.contains("pistoWon")) {
+    target.classList.remove("pistoWon");
     counterP--;
-  } else if (evt.target.classList.contains("matteoWon")) {
-    evt.target.classList.remove("matteoWon");
+  } else if (target.classList.contains("matteoWon")) {
+    target.classList.remove("matteoWon");
     counterM--;
   } else {
-    if (evt.type == "contextmenu") {
-      evt.target.classList.add("matteoWon");
+    if (evt.type === "contextmenu") {
+      target.classList.add("matteoWon");
       counterM++;
-    } else if (evt.type == "click") {
-      evt.target.classList.add("pistoWon");
+    } else if (evt.type === "click") {
+      target.classList.add("pistoWon");
       counterP++;
     }
   }
+
   pistoCounter.innerHTML = counterP;
   fattoCounter.innerHTML = counterM;
   checkForWinner();
 }
 
+
 function declareWinner() {
-  let winner = counterP > counterM ? "Pisto!!" : "Fatto!!";
+  const winner = counterP > counterM ? "Pisto!!" : "Fatto!!";
   clapping.play();
   document.body.style.backgroundImage = "unset";
   document.body.style.backgroundColor = "black";
@@ -167,6 +184,7 @@ function declareWinner() {
   titleText.style.color = "white";
   titleText.innerHTML = `Vincitore: ${winner}`;
 }
+
 
 tags.forEach((e) => e.addEventListener("click", assignPoint));
 tags.forEach((e) => e.addEventListener("contextmenu", assignPoint));
