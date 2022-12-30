@@ -1,4 +1,4 @@
-const version = "2.1.3";
+const version = "2.5.0";
 
 textAreaEl = document.getElementById("textarea");
 tagContainer = document.querySelector(".tags");
@@ -12,8 +12,67 @@ title = document.getElementById("title");
 titleText = document.getElementById("titleText");
 btnEl = document.getElementById("btn");
 versionEl = document.getElementById("version");
+leaderboardButton = document.getElementById("leaderboard-button");
+scoreboardselectorEl = document.getElementById("scoreboard-container");
 
 versionEl.innerText = `v${version}`;
+
+leaderboardButton.addEventListener("click", () => {
+  $("#container-selector").toggle();
+  $("#scoreboard-container").toggle();
+});
+
+scoreboard.forEach((score) => {
+  const scoreBox = document.createElement("div");
+  scoreBox.classList.add("score-box");
+
+  scoreboardselectorEl.appendChild(scoreBox);
+
+  const season = document.createElement("div");
+  season.classList.add("score-title");
+  season.innerText = `Season ${score[0].season} \n\n Pisto: ${score[0].pisto} Fatto: ${score[0].fatto}`;
+
+  scoreBox.appendChild(season);
+
+  const scorevalues = document.createElement("div");
+  scorevalues.classList.add("score-values");
+
+  score.forEach((value) => {
+    if (value.id) {
+      const scorevalue = document.createElement("div");
+      scorevalue.classList.add("score-value");
+
+      const scoretitle = document.createElement("div");
+      scoretitle.classList.add("score-value-title");
+
+      if (value.per >= 55) {
+        scoretitle.classList.add("score-value-title-fatto");
+      } else if (value.per <= 45) {
+        scoretitle.classList.add("score-value-title-pisto");
+      }
+
+      scoretitle.innerText = value.id;
+
+      scorevalue.appendChild(scoretitle);
+
+      const scorepisto = document.createElement("div");
+      scorepisto.classList.add("score-value-pisto");
+      scorepisto.innerText = `Pisto - ${100 - value.per}%`;
+
+      scorevalue.appendChild(scorepisto);
+
+      const scorefatto = document.createElement("div");
+      scorefatto.classList.add("score-value-fatto");
+      scorefatto.innerText = `Fatto - ${value.per}%`;
+
+      scorevalue.appendChild(scorefatto);
+
+      scorevalues.appendChild(scorevalue);
+    }
+  });
+
+  scoreBox.appendChild(scorevalues);
+});
 
 let counterP = 0;
 let counterM = 0;
