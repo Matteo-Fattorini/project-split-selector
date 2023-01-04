@@ -22,9 +22,9 @@ scoreboard.forEach((score) => {
       const scoretitle = document.createElement("div");
       scoretitle.classList.add("score-value-title");
 
-      if (value.per >= 55) {
+      if (value.per >= 53) {
         scoretitle.classList.add("score-value-title-fatto");
-      } else if (value.per <= 45) {
+      } else if (value.per <= 47) {
         scoretitle.classList.add("score-value-title-pisto");
       }
 

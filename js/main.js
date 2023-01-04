@@ -1,4 +1,4 @@
-const version = "2.5.1";
+const version = "2.5.2";
 
 textAreaEl = document.getElementById("textarea");
 tagContainer = document.querySelector(".tags");
@@ -50,10 +50,10 @@ function tagPercent(searchTag = false) {
         let colorPisto = `rgb(0, 148, 255) `;
         let blackColor = `rgb(0, 0, 0) `;
 
-        if (per >= 55 && per < 60) {
+        if (per >= 53 && per < 60) {
           colorFatto = `rgb(44, 120, 59) `;
           colorPisto = blackColor;
-        } else if (per <= 45 && per > 40) {
+        } else if (per <= 47 && per > 40) {
           colorPisto = `rgb(52, 111, 144) `;
           colorFatto = blackColor;
         } else if (per >= 60) {
