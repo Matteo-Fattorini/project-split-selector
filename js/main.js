@@ -141,7 +141,7 @@ function randomSelector() {
       if (bonus == 3) {
         superjackpot.play();
         randomTag.classList.add("special_3");
-      } else if (bonus == 2 || true) {
+      } else if (bonus == 2) {
         jackpot.play();
         randomTag.classList.add("special_2");
       }
