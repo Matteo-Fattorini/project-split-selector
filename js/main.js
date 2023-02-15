@@ -139,6 +139,7 @@ function randomSelector() {
 
       let bonus = checkIfBonus();
       if (bonus == 3) {
+        omg.play();
         superjackpot.play();
         randomTag.classList.add("special_3");
       } else if (bonus == 2) {
