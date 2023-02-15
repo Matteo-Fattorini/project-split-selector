@@ -159,7 +159,7 @@ document.body.addEventListener("keyup", (event) => {
 
     if (!isGoing) {
       const unselected = document.querySelectorAll(".unselected");
-      if (unselected.length > 1) {
+      if (unselected.length >= 1) {
         randomSelector();
       }
     }
