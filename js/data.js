@@ -1,21 +1,21 @@
 // per = percentuale vincita mia
 
 const percentages = [
-  { id: "downtown", per: 50 }, //città
-  { id: "airport", per: 50 }, //aereoplano
-  { id: "construction", per: 50 }, //casina
-  { id: "ferry", per: 50 }, //titanic
-  { id: "port", per: 50 }, //autostrada facile
-  { id: "airplane", per: 50 }, //prima curva
-  { id: "docks", per: 50 }, //99-1
-  { id: "expressway", per: 50 }, //autostrada difficile
-  { id: "powerplant", per: 50 }, //centrale
-  { id: "stormdrain", per: 50 }, //scolo
-  { id: "canyon", per: 50 }, //canyon
-  { id: "quarry", per: 50 }, //quarry
+  { id: "downtown", per: 49 }, //città
+  { id: "airport", per: 53 }, //aereoplano
+  { id: "construction", per: 47 }, //casina
+  { id: "ferry", per: 52 }, //titanic
+  { id: "port", per: 55 }, //autostrada facile
+  { id: "airplane", per: 49 }, //prima curva
+  { id: "docks", per: 47 }, //99-1
+  { id: "expressway", per: 52 }, //autostrada difficile
+  { id: "powerplant", per: 49 }, //centrale
+  { id: "stormdrain", per: 49 }, //scolo
+  { id: "canyon", per: 53 }, //canyon
+  { id: "quarry", per: 51 }, //quarry
 ];
 
-let totalWins = { pisto: 0, fatto: 0 };
+let totalWins = { pisto: 3, fatto: 2 };
 
 const scoreboard = [
   [

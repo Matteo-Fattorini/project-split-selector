@@ -1,10 +1,13 @@
-const version = "2.5.2";
+const version = "2.6.0";
 
 textAreaEl = document.getElementById("textarea");
 tagContainer = document.querySelector(".tags");
 tags = document.querySelectorAll(".tag");
 drumRoll = document.getElementById("drumRoll");
 clapping = document.getElementById("clapping");
+superjackpot = document.getElementById("superjackpot");
+omg = document.getElementById("omg");
+jackpot = document.getElementById("jackpot");
 pistoCounter = document.getElementById("puntiP");
 fattoCounter = document.getElementById("puntiM");
 subtitle = document.getElementById("subtitle");
@@ -34,7 +37,7 @@ function pickRandomTag() {
   );
   const unselectedLength = unselected.length;
 
-  if (unselectedLength === 0) {
+  if (unselectedLength == 0) {
     return null;
   }
 
@@ -131,7 +134,18 @@ function randomSelector() {
     clearInterval(interval);
     setTimeout(() => {
       const randomTag = pickRandomTag();
+
       randomTag.classList.remove("unselected");
+
+      let bonus = checkIfBonus();
+      if (bonus == 3) {
+        superjackpot.play();
+        randomTag.classList.add("special_3");
+      } else if (bonus == 2 || true) {
+        jackpot.play();
+        randomTag.classList.add("special_2");
+      }
+
       highlight(randomTag, true);
       isGoing = false;
       tagPercent();
@@ -210,5 +224,18 @@ function checkForWinner() {
     } else {
       declareWinner();
     }
+  }
+}
+
+function checkIfBonus() {
+  //calculate a random number between 1 and 100
+  const random = Math.floor(Math.random() * 100) + 1;
+  //if the random number is 1, then it's a bonus round
+  if (random === 1) {
+    return 3;
+  } else if (random > 1 && random <= 6) {
+    return 2;
+  } else {
+    return 0;
   }
 }

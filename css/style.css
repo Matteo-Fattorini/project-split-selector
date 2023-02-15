@@ -190,3 +190,42 @@ h3 {
 .score-value-title-pisto {
   color: blue;
 }
+
+.special_2::after {
+  content: "X2 Bonus"; /* Add content to pseudo-element */
+}
+
+.special_3::after {
+  content: "X3 Bonus"; /* Add content to pseudo-element */
+}
+
+.special_2::after,
+.special_3::after {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 2rem;
+  font-weight: bold;
+  text-shadow: 0 0 20px #fff, 0 0 40px #fff, 0 0 60px #fff, 0 0 80px #fff;
+  animation: bonus 2s ease-out infinite;
+}
+
+.special_3,
+.special_2 {
+  transition: transform 0.8s ease-in-out;
+}
+
+@keyframes bonus {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.6);
+  }
+  100% {
+    opacity: 0;
+  }
+}
