@@ -228,13 +228,12 @@ function checkForWinner() {
 }
 
 function checkIfBonus() {
-  //calculate a random number between 1 and 100
   const random = Math.floor(Math.random() * 100) + 1;
-  //if the random number is 1, then it's a bonus round
-  if (random === 1) {
-    return 3;
-  } else if (random > 1 && random <= 6) {
+
+  if (random > 1 && random <= 10) {
     return 2;
+  } else if (random > 10 && random <= 15) {
+    return 3;
   } else {
     return 0;
   }
