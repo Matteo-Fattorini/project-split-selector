@@ -249,9 +249,9 @@ function checkForWinner() {
 function checkIfBonus() {
   const random = Math.floor(Math.random() * 100) + 1;
 
-  if (random > 1 && random <= 10) {
+  if (random > 1 && random <= 15) {
     return 2;
-  } else if (random > 10 && random <= 15) {
+  } else if (random > 15 && random <= 20) {
     return 3;
   } else {
     return 0;
