@@ -2,20 +2,20 @@
 
 const percentages = [
   { id: "downtown", per: 49 }, //città
-  { id: "airport", per: 53 }, //aereoplano
-  { id: "construction", per: 47 }, //casina
-  { id: "ferry", per: 52 }, //titanic
-  { id: "port", per: 55 }, //autostrada facile
-  { id: "airplane", per: 49 }, //prima curva
-  { id: "docks", per: 47 }, //99-1
-  { id: "expressway", per: 52 }, //autostrada difficile
-  { id: "powerplant", per: 49 }, //centrale
-  { id: "stormdrain", per: 49 }, //scolo
-  { id: "canyon", per: 53 }, //canyon
-  { id: "quarry", per: 51 }, //quarry
+  { id: "airport", per: 54 }, //aereoplano
+  { id: "construction", per: 48 }, //casina
+  { id: "ferry", per: 53 }, //titanic
+  { id: "port", per: 54 }, //autostrada facile
+  { id: "airplane", per: 46 }, //prima curva
+  { id: "docks", per: 48 }, //99-1
+  { id: "expressway", per: 51 }, //autostrada difficile
+  { id: "powerplant", per: 50 }, //centrale
+  { id: "stormdrain", per: 47 }, //scolo
+  { id: "canyon", per: 55 }, //canyon
+  { id: "quarry", per: 50 }, //quarry
 ];
 
-let totalWins = { pisto: 3, fatto: 2 };
+let totalWins = { pisto: 4, fatto: 2 };
 
 const scoreboard = [
   [
