@@ -1,4 +1,4 @@
-const version = "2.6.1";
+const version = "2.6.2";
 
 textAreaEl = document.getElementById("textarea");
 tagContainer = document.querySelector(".tags");
@@ -16,20 +16,26 @@ titleText = document.getElementById("titleText");
 btnEl = document.getElementById("btn");
 versionEl = document.getElementById("version");
 leaderboardButton = document.getElementById("leaderboard-button");
+scoreButton = document.getElementById("score-button");
 scoreboardselectorEl = document.getElementById("scoreboard-container");
-
 versionEl.innerText = `v${version}`;
+let gameStarted = false;
+let counterP = 0;
+let counterM = 0;
+
+let isGoing = false;
+let isEven = false;
 
 leaderboardButton.addEventListener("click", () => {
   $("#container-selector").toggle();
   $("#scoreboard-container").toggle();
 });
 
-let counterP = 0;
-let counterM = 0;
-
-let isGoing = false;
-let isEven = false;
+scoreButton.addEventListener("click", () => {
+  if (!gameStarted) {
+    highlightAll();
+  }
+});
 
 function pickRandomTag() {
   const unselected = document.querySelectorAll(
@@ -113,6 +119,10 @@ function highlight(tag, last = false) {
   }
 }
 
+function highlightAll() {
+  tags.forEach((tag) => highlight(tag, true));
+}
+
 function unhighlight(tag) {
   tag.classList.remove("selected");
 }
@@ -156,6 +166,11 @@ function randomSelector() {
 
 document.body.addEventListener("keyup", (event) => {
   if (event.key === "Enter") {
+    gameStarted = true;
+    scoreButton.disabled = true;
+    scoreButton.style.opacity = "0.5";
+    scoreButton.style.cursor = "not-allowed";
+  
     tags.forEach((tag) => unhighlight(tag));
 
     if (!isGoing) {

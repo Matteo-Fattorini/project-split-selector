@@ -117,7 +117,7 @@ h3 {
   right: 10px;
 }
 
-#leaderboard-button {
+#leaderboard-button, #score-button {
   background-color: tomato;
   color: white;
   border-radius: 50px;
@@ -130,7 +130,11 @@ h3 {
   right: 10px;
 }
 
-#leaderboard-button:hover {
+#score-button {
+  right: 150px;
+}
+
+#leaderboard-button:hover, #score-button:hover {
   transform: scale(1.1);
   cursor: pointer;
 }
