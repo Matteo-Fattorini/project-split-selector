@@ -62,16 +62,16 @@ function tagPercent(searchTag = false) {
         let colorPisto = `rgb(0, 148, 255) `;
         let blackColor = `rgb(0, 0, 0) `;
 
-        if (per >= 53 && per < 60) {
+        if (per >= 53 && per < 56) {
           colorFatto = `rgb(44, 120, 59) `;
           colorPisto = blackColor;
-        } else if (per <= 47 && per > 40) {
+        } else if (per <= 47 && per > 44) {
           colorPisto = `rgb(52, 111, 144) `;
           colorFatto = blackColor;
-        } else if (per >= 60) {
+        } else if (per >= 54) {
           colorFatto = `rgb(36, 62, 21) `;
           colorPisto = blackColor;
-        } else if (per <= 40) {
+        } else if (per <= 44) {
           colorPisto = `rgb(13, 40, 94) `;
           colorFatto = blackColor;
         } else {
