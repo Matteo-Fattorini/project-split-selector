@@ -15,7 +15,7 @@ const percentages = [
   { id: "quarry", per: 50 }, //quarry
 ];
 
-let totalWins = { pisto: 4, fatto: 2 };
+const totalWins = { totalWinsPisto: 4, totalWinsFatto: 2 };
 
 const scoreboard = [
   [

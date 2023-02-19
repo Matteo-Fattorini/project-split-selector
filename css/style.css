@@ -36,6 +36,26 @@ body {
   text-align: center;
 }
 
+#total_wins {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #2f2f2f;
+  color: white;
+  padding: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 5px;
+  position: absolute;
+  left: 10px;
+  top: 10px;
+}
+
+#total_wins span {
+  margin: 0 10px;
+  font-weight: normal;
+}
+
 h3 {
   color: white;
   margin: 10px 0 20px;
@@ -117,7 +137,8 @@ h3 {
   right: 10px;
 }
 
-#leaderboard-button, #score-button {
+#leaderboard-button,
+#score-button {
   background-color: tomato;
   color: white;
   border-radius: 50px;
@@ -134,7 +155,8 @@ h3 {
   right: 150px;
 }
 
-#leaderboard-button:hover, #score-button:hover {
+#leaderboard-button:hover,
+#score-button:hover {
   transform: scale(1.1);
   cursor: pointer;
 }

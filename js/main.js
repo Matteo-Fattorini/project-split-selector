@@ -1,4 +1,4 @@
-const version = "2.6.2";
+const version = "2.6.5";
 
 textAreaEl = document.getElementById("textarea");
 tagContainer = document.querySelector(".tags");
@@ -30,6 +30,9 @@ leaderboardButton.addEventListener("click", () => {
   $("#container-selector").toggle();
   $("#scoreboard-container").toggle();
 });
+
+$("#totalWinsPisto").text(totalWins.totalWinsPisto);
+$("#totalWinsFatto").text(totalWins.totalWinsFatto);
 
 scoreButton.addEventListener("click", () => {
   if (!gameStarted) {
@@ -170,7 +173,7 @@ document.body.addEventListener("keyup", (event) => {
     scoreButton.disabled = true;
     scoreButton.style.opacity = "0.5";
     scoreButton.style.cursor = "not-allowed";
-  
+
     tags.forEach((tag) => unhighlight(tag));
 
     if (!isGoing) {
