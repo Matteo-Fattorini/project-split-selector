@@ -23,6 +23,7 @@ versionEl.innerText = `v${version}`;
 let gameStarted = false;
 let counterP = 0;
 let counterM = 0;
+let bonuscount = 0;
 
 let isGoing = false;
 let isEven = false;
@@ -250,9 +251,11 @@ function checkForWinner() {
 function checkIfBonus() {
   const random = Math.floor(Math.random() * 100) + 1;
 
-  if (random > 1 && random <= 15) {
+  if (random > 1 && random <= 15 && bonuscount < 3) {
+    bonuscount++;
     return 2;
-  } else if (random > 15 && random <= 20) {
+  } else if (random > 15 && random <= 20 && bonuscount < 3) {
+    bonuscount++;
     return 3;
   } else {
     return 0;
