@@ -251,10 +251,14 @@ function checkForWinner() {
 function checkIfBonus() {
   const random = Math.floor(Math.random() * 100) + 1;
 
-  if (random > 1 && random <= 15 && bonuscount < 3) {
+  if (bonuscount >= 3) {
+    return 0;
+  }
+
+  if (random > 1 && random <= 15) {
     bonuscount++;
     return 2;
-  } else if (random > 15 && random <= 20 && bonuscount < 3) {
+  } else if (random > 15 && random <= 20) {
     bonuscount++;
     return 3;
   } else {
