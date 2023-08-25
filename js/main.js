@@ -21,6 +21,7 @@ const scoreboardselectorEl = document.getElementById("scoreboard-container");
 
 versionEl.innerText = `v${version}`;
 let gameStarted = false;
+let disableBonus = false;
 let counterP = 0;
 let counterM = 0;
 let bonuscount = 0;
@@ -170,8 +171,14 @@ function randomSelector() {
 }
 
 document.body.addEventListener("keyup", (event) => {
-  if (event.key === "Enter") {
+  if (event.key === "Enter" || event.key === "Backspace") {
     gameStarted = true;
+    if (event.key === "Backspace") {
+      disableBonus = true;
+    } else {
+      disableBonus = false;
+    }
+
     scoreButton.disabled = true;
     scoreButton.style.opacity = "0.5";
     scoreButton.style.cursor = "not-allowed";
@@ -251,7 +258,7 @@ function checkForWinner() {
 function checkIfBonus() {
   const random = Math.floor(Math.random() * 100) + 1;
 
-  if (bonuscount >= 2) {
+  if (bonuscount >= 2 || disableBonus) {
     return 0;
   }
 
