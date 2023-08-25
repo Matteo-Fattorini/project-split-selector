@@ -251,7 +251,7 @@ function checkForWinner() {
 function checkIfBonus() {
   const random = Math.floor(Math.random() * 100) + 1;
 
-  if (bonuscount >= 3) {
+  if (bonuscount >= 2) {
     return 0;
   }
 
