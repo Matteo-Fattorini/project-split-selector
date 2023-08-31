@@ -1,4 +1,4 @@
-const version = "2.6.5";
+const version = "2.6.7";
 
 const textAreaEl = document.getElementById("textarea");
 const tagContainer = document.querySelector(".tags");
