@@ -1,4 +1,3 @@
-//scoreboard
 scoreboard.forEach((score) => {
   const scoreBox = document.createElement("div");
   scoreBox.classList.add("score-box");
@@ -50,5 +49,3 @@ scoreboard.forEach((score) => {
 
   scoreBox.appendChild(scorevalues);
 });
-
-//end scoreboard

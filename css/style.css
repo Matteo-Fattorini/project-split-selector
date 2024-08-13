@@ -218,15 +218,20 @@ h3 {
 }
 
 .special_2::after {
-  content: "X2 Bonus"; /* Add content to pseudo-element */
+  content: "X2 Bonus!"; /* Add content to pseudo-element */
 }
 
 .special_3::after {
-  content: "X3 Bonus"; /* Add content to pseudo-element */
+  content: "X3 Bonus!"; /* Add content to pseudo-element */
+}
+
+.special_4::after {
+  content: "X4 Bonus!"; /* Add content to pseudo-element */
 }
 
 .special_2::after,
-.special_3::after {
+.special_3::after,
+.special_4::after {
   position: absolute;
   top: 60%;
   left: 50%;
@@ -239,7 +244,8 @@ h3 {
 }
 
 .special_3,
-.special_2 {
+.special_2,
+.special_4 {
   transition: transform 0.8s ease-in-out;
 }
 

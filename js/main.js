@@ -153,7 +153,7 @@ function randomSelector() {
 
       randomTag.classList.remove("unselected");
 
-      let bonus = checkIfBonus();
+      let bonus = checkIfBonus(randomTag);
       if (bonus == 3) {
         omg.play();
         superjackpot.play();
@@ -255,20 +255,26 @@ function checkForWinner() {
   }
 }
 
-function checkIfBonus() {
+function checkIfBonus(randomTag) {
   const random = Math.floor(Math.random() * 100) + 1;
 
-  if (bonuscount >= 2 || disableBonus) {
+  if (
+    bonuscount >= 2 ||
+    disableBonus ||
+    totalWins.totalWinsPisto + totalWins.totalWinsFatto < 3
+  ) {
     return 0;
   }
 
-  if (random > 1 && random <= 15) {
+  if (random >= 1 && random <= 15) {
     bonuscount++;
     return 2;
-  } else if (random > 15 && random <= 20) {
+  }
+
+  if (random > 15 && random <= 20) {
     bonuscount++;
     return 3;
-  } else {
-    return 0;
   }
+
+  return 0;
 }
