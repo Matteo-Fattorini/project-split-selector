@@ -136,7 +136,6 @@ body {
 
 .tag.selected {
   background-color: #df4545 !important;
-  background-image: none !important;
 }
 
 #btn {
