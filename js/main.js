@@ -153,7 +153,7 @@ function randomSelector() {
 
       randomTag.classList.remove("unselected");
 
-      let bonus = checkIfBonus(randomTag);
+      let bonus = checkIfBonus();
       if (bonus == 3) {
         omg.play();
         superjackpot.play();
