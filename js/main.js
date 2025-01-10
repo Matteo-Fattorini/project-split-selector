@@ -255,7 +255,7 @@ function checkForWinner() {
   }
 }
 
-function checkIfBonus(randomTag) {
+function checkIfBonus() {
   const random = Math.floor(Math.random() * 100) + 1;
 
   if (
@@ -266,7 +266,7 @@ function checkIfBonus(randomTag) {
     return 0;
   }
 
-  if (random >= 1 && random <= 15) {
+  if (random >= 1 && random <= 10) {
     bonuscount++;
     return 2;
   }
