@@ -12,6 +12,7 @@ let bonuscount = 0;
 let isGoing = false;
 let isEven = false;
 let locationResults = [];
+let pendingPointAssignment = null;
 
 // DOM Elements
 const elements = {
@@ -48,7 +49,13 @@ const elements = {
   scoreboardContainerEl: document.getElementById("scoreboard-container"),
   containerSelector: document.getElementById("container-selector"),
   winnerAnnouncement: document.getElementById("winner-announcement"),
-  winnerName: document.getElementById("winner-name")
+  winnerName: document.getElementById("winner-name"),
+  
+  // Point confirmation modal
+  pointConfirmModal: document.getElementById("point-confirm-modal"),
+  confirmLocationName: document.querySelector(".location-name"),
+  confirmYes: document.getElementById("confirm-yes"),
+  confirmNo: document.getElementById("confirm-no")
 };
 
 /**
@@ -145,9 +152,13 @@ function setupEventListeners() {
   
   // Tag click events
   elements.tags.forEach(tag => {
-    tag.addEventListener("click", assignPoint);
-    tag.addEventListener("contextmenu", assignPoint);
+    tag.addEventListener("click", handlePointAssignmentClick);
+    tag.addEventListener("contextmenu", handlePointAssignmentClick);
   });
+  
+  // Confirmation modal buttons
+  elements.confirmYes.addEventListener("click", confirmPointAssignment);
+  elements.confirmNo.addEventListener("click", cancelPointAssignment);
   
   // Keyboard events
   document.body.addEventListener("keyup", handleKeyPress);
@@ -554,10 +565,40 @@ function removeClasses(element) {
 }
 
 /**
- * Assign a point to a player based on click type
+ * Show the point confirmation modal
+ * @param {String} locationName - Name of the location
+ */
+function showPointConfirmationModal(locationName) {
+  const playerName = pendingPointAssignment.eventType === "contextmenu" ? "Fatto" : "Pisto";
+  elements.confirmLocationName.textContent = locationName;
+  
+  // Update the confirmation text to show player name
+  document.getElementById("player-name").textContent = playerName;
+  
+  elements.pointConfirmModal.style.display = "flex";
+  
+  // Add animation classes
+  setTimeout(() => {
+    elements.pointConfirmModal.classList.add("active");
+  }, 10);
+}
+
+/**
+ * Hide the point confirmation modal
+ */
+function hidePointConfirmationModal() {
+  elements.pointConfirmModal.classList.remove("active");
+  
+  setTimeout(() => {
+    elements.pointConfirmModal.style.display = "none";
+  }, 300);
+}
+
+/**
+ * Handle point assignment click
  * @param {Event} evt - Click or contextmenu event
  */
-function assignPoint(evt) {
+function handlePointAssignmentClick(evt) {
   evt.preventDefault();
 
   // Check if the click was on a percentage box - if so, ignore the click
@@ -572,6 +613,63 @@ function assignPoint(evt) {
   // Don't allow point assignment during animation
   if (isGoing) return;
   
+  // Check if the tag already has a winner assigned
+  const hasWinner = target.classList.contains("pistoWon") || target.classList.contains("matteoWon");
+  
+  // Store the event and target for later use
+  pendingPointAssignment = {
+    target,
+    eventType: evt.type,
+    hasWinner
+  };
+  
+  // Get the location name to display in the confirmation
+  // Clone the node and remove percentage elements to get clean text
+  const cloneNode = target.cloneNode(true);
+  const percentageElements = cloneNode.querySelectorAll('.percentBox, .pistoPercent, .fattoPercent');
+  percentageElements.forEach(el => el.remove());
+  const locationName = cloneNode.textContent.trim();
+  
+  // Show confirmation modal
+  showPointConfirmationModal(locationName);
+}
+
+/**
+ * Confirm point assignment from the modal
+ */
+function confirmPointAssignment() {
+  if (pendingPointAssignment) {
+    const { target, eventType, hasWinner } = pendingPointAssignment;
+    
+    // Actually assign the point
+    processPointAssignment(target, eventType, hasWinner);
+    
+    // Hide the confirmation modal
+    hidePointConfirmationModal();
+    
+    // Clear the pending assignment
+    pendingPointAssignment = null;
+  }
+}
+
+/**
+ * Cancel point assignment
+ */
+function cancelPointAssignment() {
+  // Hide the confirmation modal
+  hidePointConfirmationModal();
+  
+  // Clear the pending assignment
+  pendingPointAssignment = null;
+}
+
+/**
+ * Process the actual point assignment after confirmation
+ * @param {Element} target - The tag element
+ * @param {String} eventType - The event type ('click' or 'contextmenu')
+ * @param {Boolean} hasWinner - Whether the tag already has a winner
+ */
+function processPointAssignment(target, eventType, hasWinner) {
   // We want to keep the background with percentages
   target.classList.remove("selected");
 
@@ -598,7 +696,7 @@ function assignPoint(evt) {
     // Restore the original percentage background
     showPercentageBackground(target);
   } else {
-    if (evt.type === "contextmenu") {
+    if (eventType === "contextmenu") {
       target.classList.add("matteoWon");
       counterM++;
       locationResult.winner = "fatto";
@@ -606,7 +704,7 @@ function assignPoint(evt) {
       // Apply fatto color while keeping percentages visible
       target.style.backgroundColor = "var(--fatto-color)";
       target.style.backgroundImage = "none";
-    } else if (evt.type === "click") {
+    } else if (eventType === "click") {
       target.classList.add("pistoWon");
       counterP++;
       locationResult.winner = "pisto";
