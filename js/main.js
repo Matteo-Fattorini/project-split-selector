@@ -150,6 +150,16 @@ function setupEventListeners() {
   elements.closeHelpButton.addEventListener("click", closeHelpModal);
   elements.playAgainButton.addEventListener("click", handlePlayAgain);
   
+  // Backup and restore functionality
+  const restoreBackupButton = document.getElementById("restore-backup-button");
+  const backupFileInput = document.getElementById("backup-file-input");
+  
+  restoreBackupButton.addEventListener("click", () => {
+    backupFileInput.click();
+  });
+  
+  backupFileInput.addEventListener("change", handleFileUpload);
+  
   // Tag click events
   elements.tags.forEach(tag => {
     tag.addEventListener("click", handlePointAssignmentClick);
@@ -162,6 +172,49 @@ function setupEventListeners() {
   
   // Keyboard events
   document.body.addEventListener("keyup", handleKeyPress);
+}
+
+/**
+ * Handle file upload for backup restoration
+ * @param {Event} event - Change event from the file input
+ */
+function handleFileUpload(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  
+  // Check if it's a JSON file
+  if (file.type !== "application/json" && !file.name.endsWith('.json')) {
+    alert("Please select a valid JSON file.");
+    event.target.value = ""; // Reset the input
+    return;
+  }
+  
+  const reader = new FileReader();
+  
+  reader.onload = function(e) {
+    try {
+      const data = JSON.parse(e.target.result);
+      
+      // Restore the data using gameData's importGameData function
+      gameData.importGameData(data);
+      
+      // Reset the file input for future use
+      event.target.value = "";
+      
+      // Reset the game to show updated percentages
+      showAllPercentages();
+      
+    } catch (error) {
+      console.error("Error parsing backup file:", error);
+      alert(`Error parsing the backup file: ${error.message}`);
+    }
+  };
+  
+  reader.onerror = function() {
+    alert("Failed to read the file. Please try again.");
+  };
+  
+  reader.readAsText(file);
 }
 
 /**

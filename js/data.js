@@ -57,7 +57,7 @@ const APP_CONFIG = {
   version: "3.0.0",
   storageName: "splitSelector",
   bonusChance: {
-    doubleBonus: 10, // 10% chance for 2x bonus
+    doubleBonus: 7, // 10% chance for 2x bonus
     tripleBonus: 3,  // 3% chance for 3x bonus
     specialBonus: 0  // 0% chance for 4x bonus
   },
@@ -90,16 +90,57 @@ function loadGameData() {
 }
 
 /**
- * Save game data to localStorage
+ * Download game data as a JSON file for backup
+ * @param {Object} data - Game data to download
+ */
+function downloadGameData(data) {
+  try {
+    // Create a Blob with the data
+    const dataStr = JSON.stringify(data, null, 2);
+    const blob = new Blob([dataStr], { type: 'application/json' });
+    
+    // Create an object URL for the blob
+    const url = URL.createObjectURL(blob);
+    
+    // Create a temporary link element
+    const downloadLink = document.createElement('a');
+    downloadLink.href = url;
+    downloadLink.download = 'splitselector_savedata.json';
+    
+    // Append to the document, click it, and remove it
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    
+    // Clean up
+    setTimeout(() => {
+      document.body.removeChild(downloadLink);
+      URL.revokeObjectURL(url);
+    }, 100);
+    
+    console.log('Game data backup downloaded successfully');
+  } catch (error) {
+    console.error('Error downloading game data:', error);
+  }
+}
+
+/**
+ * Save game data to localStorage and download as JSON
  */
 function saveGameData() {
   try {
     const data = {
       percentages: PERCENTAGES,
       totalWins: TOTAL_WINS,
-      scoreboard: SCOREBOARD
+      scoreboard: SCOREBOARD,
+      savedAt: new Date().toISOString() // Add timestamp for the backup file
     };
+    
+    // Save to localStorage
     localStorage.setItem(APP_CONFIG.storageName, JSON.stringify(data));
+    
+    // Also download as JSON file for backup
+    downloadGameData(data);
+    
     return true;
   } catch (error) {
     console.error('Error saving game data:', error);
@@ -218,6 +259,49 @@ function resetSaveData() {
   return true;
 }
 
+/**
+ * Import game data from a JSON file
+ * @param {Object} data - Game data to import
+ */
+function importGameData(data) {
+  try {
+    // Validate the imported data format
+    if (!data.percentages || !data.totalWins || !data.scoreboard) {
+      throw new Error("Invalid backup file format");
+    }
+    
+    // Update global variables
+    PERCENTAGES = data.percentages;
+    TOTAL_WINS = data.totalWins;
+    SCOREBOARD = data.scoreboard;
+    
+    // Save to localStorage
+    localStorage.setItem(APP_CONFIG.storageName, JSON.stringify({
+      percentages: PERCENTAGES,
+      totalWins: TOTAL_WINS,
+      scoreboard: SCOREBOARD
+    }));
+    
+    // Update UI
+    document.getElementById('totalWinsPisto').textContent = TOTAL_WINS.totalWinsPisto;
+    document.getElementById('totalWinsFatto').textContent = TOTAL_WINS.totalWinsFatto;
+    
+    // Refresh the game to reflect new data
+    if (typeof resetGame === 'function') {
+      resetGame();
+    }
+    
+    // Show success message
+    alert("Game data successfully restored from backup!");
+    
+    return true;
+  } catch (error) {
+    console.error('Error importing game data:', error);
+    alert("Error importing game data: " + error.message);
+    return false;
+  }
+}
+
 // Load game data on initialization
 loadGameData();
 
@@ -230,6 +314,7 @@ window.gameData = {
   updateTotalWins,
   addNewSeason,
   resetGame,
-  resetSaveData
+  resetSaveData,
+  importGameData
 };
 
