@@ -3,30 +3,73 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title></title>
-    <!-- Custom CSS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <title>Split Selector Game</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link rel="stylesheet" href="css/style.css" />
-    <script src="js/data.js"></script>
-    <script defer src="js/main.js" charset="utf-8"></script>
-    <script defer src="js/scoreboard.js" charset="utf-8"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="js/data.js" defer></script>
+    <script type="module" src="js/main.js" defer></script>
+    <script type="module" src="js/scoreboard.js" defer></script>
   </head>
 
-  <body>
-    <button id="leaderboard-button">Leaderboard</button>
-    <button id="score-button">Score</button>
-    <div id="total_wins">
-      Pisto: <span id="totalWinsPisto">0</span> Fatto: <span id="totalWinsFatto">0</span>
+  <body class="dark-theme">
+    <header class="game-header">
+      <div class="game-controls">
+        <button id="reset-button" class="control-button" title="Reset game">
+          <i class="fas fa-redo"></i>
+        </button>
+        <button id="reset-save-button" class="control-button" title="Reset save files">
+          <i class="fas fa-trash"></i>
+        </button>
+        <button id="help-button" class="control-button" title="Game instructions">
+          <i class="fas fa-question"></i>
+        </button>
+      </div>
+          <div id="total_wins">
+        Pisto: <span id="totalWinsPisto">0</span> Fatto: <span id="totalWinsFatto">0</span>
+      </div>  </div>
+      <div class="nav-buttons">
+        <button id="leaderboard-button" class="primary-button">Leaderboard</button>
     </div>
+    </header>
+
+    <!-- Audio elements -->
+    <div class="audio-container">
+      <audio id="drumRoll" src="DrumRoll.mp3" preload="auto"></audio>
+      <audio id="clapping" src="Clapping.mp3" preload="auto"></audio>
+      <audio id="jackpot" src="Jackpot.mp3" preload="auto"></audio>
+      <audio id="omg" src="Omg.mp3" preload="auto"></audio>
+      <audio id="superjackpot" src="SuperJackpot.mp3" preload="auto"></audio>
+    </div>
+
+    <!-- Help Modal -->
+    <div id="help-modal" class="modal">
+      <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h2>How to Play Split Selector</h2>
+        <div class="instructions">
+          <p><strong>Game Objective:</strong> Select locations to earn points and win the game.</p>
+          <p><strong>Controls:</strong></p>
+          <ul>
+            <li>Press <kbd>Enter</kbd> to start a random selection</li>
+            <li>Press <kbd>Backspace</kbd> to start a selection without bonus</li>
+            <li>Left-click a location to assign it to Pisto</li>
+            <li>Right-click a location to assign it to Fatto</li>
+          </ul>
+          <p><strong>Winning:</strong> The player with the most locations wins when all are assigned.</p>
+          <p><strong>Bonus:</strong> Sometimes selections will get a 2x or 3x bonus with special effects!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scoreboard View -->
     <div id="scoreboard-container">
+      <h2 class="section-title">Game History</h2>
       <div id="scoreboard-subcontainer"></div>
     </div>
+
+    <!-- Main Game Container -->
     <div id="container-selector">
-      <audio id="drumRoll" src="DrumRoll.mp3"></audio>
-      <audio id="clapping" src="Clapping.mp3"></audio>
-      <audio id="jackpot" src="Jackpot.mp3"></audio>
-      <audio id="omg" src="Omg.mp3"></audio>
-      <audio id="superjackpot" src="SuperJackpot.mp3"></audio>
       <h1 id="title">
         <span id="titleText">SPLIT SELECTOR</span>
         <span id="version"></span>
@@ -36,21 +79,36 @@
       </h1>
 
       <div class="container">
-        <div class="tags">
-          <span id="downtown" class="tag unselected">Città</span>
-          <span id="airport" class="tag unselected">Aereoplano</span>
-          <span id="construction" class="tag unselected">Casina (Via G.Falcone 16)</span>
-          <span id="ferry" class="tag unselected">Titanic</span>
-          <span id="port" class="tag unselected">Autostrada facile</span>
-          <span id="airplane" class="tag unselected">Prima curva</span>
-          <span id="docks" class="tag unselected">99-1</span>
-          <span id="expressway" class="tag unselected">Autostrada</span>
-          <span id="powerplant" class="tag unselected">Centrale</span>
-          <span id="stormdrain" class="tag unselected">Scolo</span>
-          <span id="canyon" class="tag unselected">Canyon</span>
-          <span id="quarry" class="tag unselected">Quarry</span>
+        <div class="tags-container">
+          <div class="tags">
+            <span id="downtown" class="tag unselected">Città</span>
+            <span id="airport" class="tag unselected">Aereoplano</span>
+            <span id="construction" class="tag unselected">Casina (Via Aldo Moro 48)</span>
+            <span id="ferry" class="tag unselected">Titanic</span>
+            <span id="port" class="tag unselected">Autostrada facile</span>
+            <span id="airplane" class="tag unselected">Prima curva</span>
+            <span id="docks" class="tag unselected">99-1</span>
+            <span id="expressway" class="tag unselected">Autostrada</span>
+            <span id="powerplant" class="tag unselected">Centrale</span>
+            <span id="stormdrain" class="tag unselected">Scolo</span>
+            <span id="canyon" class="tag unselected">Canyon</span>
+            <span id="quarry" class="tag unselected">Quarry</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Winner Announcement -->
+      <div id="winner-announcement" class="hidden">
+        <div class="winner-content">
+          <h2>Winner</h2>
+          <div id="winner-name"></div>
+          <button id="play-again" class="primary-button">Play Again</button>
         </div>
       </div>
     </div>
+
+    <footer class="game-footer">
+      <p>&copy; 2025 Split Selector <span id="version-footer"></span></p>
+    </footer>
   </body>
 </html>
