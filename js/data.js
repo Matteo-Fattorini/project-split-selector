@@ -57,7 +57,7 @@ const APP_CONFIG = {
   version: "3.0.0",
   storageName: "splitSelector",
   bonusChance: {
-    doubleBonus: 7, // 10% chance for 2x bonus
+    doubleBonus: 10, // 10% chance for 2x bonus
     tripleBonus: 3,  // 3% chance for 3x bonus
     specialBonus: 0  // 0% chance for 4x bonus
   },
