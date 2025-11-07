@@ -15,9 +15,6 @@ const title = document.getElementById("title");
 const titleText = document.getElementById("titleText");
 const btnEl = document.getElementById("btn");
 const versionEl = document.getElementById("version");
-const leaderboardButton = document.getElementById("leaderboard-button");
-const scoreButton = document.getElementById("score-button");
-const scoreboardselectorEl = document.getElementById("scoreboard-container");
 
 versionEl.innerText = `v${version}`;
 let gameStarted = false;
@@ -28,20 +25,6 @@ let bonuscount = 0;
 
 let isGoing = false;
 let isEven = false;
-
-leaderboardButton.addEventListener("click", () => {
-  $("#container-selector").toggle();
-  $("#scoreboard-container").toggle();
-});
-
-$("#totalWinsPisto").text(totalWins.totalWinsPisto);
-$("#totalWinsFatto").text(totalWins.totalWinsFatto);
-
-scoreButton.addEventListener("click", () => {
-  if (!gameStarted) {
-    highlightAll();
-  }
-});
 
 function pickRandomTag() {
   const unselected = document.querySelectorAll(
@@ -182,10 +165,6 @@ document.body.addEventListener("keyup", (event) => {
       disableBonus = false;
     }
 
-    scoreButton.disabled = true;
-    scoreButton.style.opacity = "0.5";
-    scoreButton.style.cursor = "not-allowed";
-
     tags.forEach((tag) => unhighlight(tag));
 
     if (!isGoing) {
@@ -259,14 +238,25 @@ function checkForWinner() {
   // Count how many circuits have been assigned
   const assignedCircuits = document.querySelectorAll('.pistoWon, .matteoWon').length;
 
+  // If we're in tiebreaker mode, declare winner as soon as someone scores
+  if (isEven && assignedCircuits >= 1) {
+    declareWinner();
+    return;
+  }
+
   // Check if all 12 circuits have been assigned
   if (assignedCircuits >= 12) {
     if (counterP == counterM) {
       // Tie - trigger tiebreaker
       tags.forEach((e) => removeClasses(e));
+      counterP = 0;
+      counterM = 0;
+      pistoCounter.innerHTML = counterP;
+      fattoCounter.innerHTML = counterM;
       isEven = true;
       randomSelector();
     } else {
+      // There's a winner
       declareWinner();
     }
   }
