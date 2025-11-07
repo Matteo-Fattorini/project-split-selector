@@ -21,8 +21,6 @@ let gameStarted = false;
 let disableBonus = false;
 let counterP = 0;
 let counterM = 0;
-let bonuscount = 0;
-
 let isGoing = false;
 let isEven = false;
 
@@ -271,13 +269,13 @@ function checkIfBonus() {
     return 0;
   }
 
-  if (random >= 1 && random <= 10) {
-    bonuscount++;
+  // X2 Bonus: 12% probability (1-12)
+  if (random >= 1 && random <= 12) {
     return 2;
   }
 
-  if (random > 15 && random <= 20) {
-    bonuscount++;
+  // X3 Bonus: 6% probability (13-18)
+  if (random >= 13 && random <= 18) {
     return 3;
   }
 
