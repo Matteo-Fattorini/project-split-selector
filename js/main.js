@@ -207,19 +207,27 @@ function assignPoint(evt) {
   target.style.backgroundImage = "unset";
   target.classList.remove("selected");
 
+  // Check for bonus multiplier
+  let pointValue = 1;
+  if (target.classList.contains("special_3")) {
+    pointValue = 3;
+  } else if (target.classList.contains("special_2")) {
+    pointValue = 2;
+  }
+
   if (target.classList.contains("pistoWon")) {
     target.classList.remove("pistoWon");
-    counterP--;
+    counterP -= pointValue;
   } else if (target.classList.contains("matteoWon")) {
     target.classList.remove("matteoWon");
-    counterM--;
+    counterM -= pointValue;
   } else {
     if (evt.type === "contextmenu") {
       target.classList.add("matteoWon");
-      counterM++;
+      counterM += pointValue;
     } else if (evt.type === "click") {
       target.classList.add("pistoWon");
-      counterP++;
+      counterP += pointValue;
     }
   }
 
