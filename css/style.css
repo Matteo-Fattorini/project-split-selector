@@ -71,8 +71,9 @@ body {
 }
 
 .tag {
-  background-color: #333;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(145deg, #3a3a3a, #2d2d2d);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6),
+              inset 0 1px 0 rgba(255, 255, 255, 0.1);
   color: #fff;
   border-radius: 20px;
   padding: 50px 30px;
@@ -81,12 +82,13 @@ body {
   height: 250px;
   text-align: center;
   font-weight: 500;
-  transition: transform 0.5s ease-in-out, background-color 0.2s ease-in-out;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 2px solid rgba(255, 255, 255, 0.1);
 }
 
 @media (min-width: 768px) {
@@ -106,7 +108,9 @@ body {
 }
 
 .tag:hover {
-  transform: scale(1.05);
+  transform: scale(1.05) translateY(-5px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.8),
+              inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .percentBox {
@@ -127,15 +131,37 @@ body {
 }
 
 .pistoWon {
-  background-color: #0066cc;
+  background: linear-gradient(145deg, #0077ee, #0055aa);
+  border: 2px solid #00aaff;
+  box-shadow: 0 8px 25px rgba(0, 102, 204, 0.5),
+              inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .matteoWon {
-  background-color: #33cc33;
+  background: linear-gradient(145deg, #44dd44, #22aa22);
+  border: 2px solid #55ff55;
+  box-shadow: 0 8px 25px rgba(51, 204, 51, 0.5),
+              inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .tag.selected {
-  background-color: #df4545 !important;
+  background: linear-gradient(145deg, #ff5555, #cc3333) !important;
+  border: 2px solid #ff6666 !important;
+  box-shadow: 0 8px 25px rgba(223, 69, 69, 0.6),
+              inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+  animation: selectedPulse 0.5s ease-out;
+}
+
+@keyframes selectedPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 #btn {
@@ -168,8 +194,9 @@ body {
 
 #leaderboard-button,
 #score-button {
-  background-color: #ff6347;
+  background: linear-gradient(145deg, #ff7359, #ff5033);
   color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.3);
   border-radius: 30px;
   padding: 12px 25px;
   font-size: 1rem;
@@ -177,7 +204,11 @@ body {
   top: 15px;
   right: 15px;
   cursor: pointer;
-  transition: transform 0.3s ease-in-out;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(255, 99, 71, 0.4);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 #score-button {
@@ -186,7 +217,14 @@ body {
 
 #leaderboard-button:hover,
 #score-button:hover {
-  transform: scale(1.1);
+  transform: scale(1.1) translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 99, 71, 0.6);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+#leaderboard-button:active,
+#score-button:active {
+  transform: scale(1.05) translateY(0);
 }
 
 #scoreboard-container {
@@ -256,16 +294,62 @@ body {
   color: #0066cc;
 }
 
+.special_2,
+.special_3,
+.special_4 {
+  position: relative;
+  overflow: visible;
+  animation: bonusGlow 1.5s ease-in-out infinite, bonusPulse 0.8s ease-in-out;
+  border: 3px solid #ffd700 !important;
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.8), 0 0 60px rgba(255, 215, 0, 0.6),
+              0 0 90px rgba(255, 215, 0, 0.4), inset 0 0 30px rgba(255, 215, 0, 0.3);
+}
+
+.special_2::before,
+.special_3::before,
+.special_4::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  background: linear-gradient(45deg, #ffd700, #ffed4e, #ffd700, #ffed4e);
+  background-size: 400% 400%;
+  border-radius: 25px;
+  z-index: -1;
+  animation: gradientShift 3s ease infinite;
+  opacity: 0.7;
+}
+
 .special_2::after {
-  content: "X2 Bonus!";
+  content: "X2 BONUS!";
+  background: linear-gradient(45deg, #ff6b6b, #ffd700, #ff6b6b);
+  background-size: 200% 200%;
+  animation: textGradient 2s ease infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .special_3::after {
-  content: "X3 Bonus!";
+  content: "X3 JACKPOT!";
+  background: linear-gradient(45deg, #ff1744, #ffd700, #00e5ff, #ffd700);
+  background-size: 300% 300%;
+  animation: textGradient 1.5s ease infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .special_4::after {
-  content: "X4 Bonus!";
+  content: "X4 MEGA!";
+  background: linear-gradient(45deg, #ff1744, #ffd700, #00e5ff, #ff1744);
+  background-size: 300% 300%;
+  animation: textGradient 1s ease infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .special_2::after,
@@ -275,28 +359,80 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: #ff0;
-  font-size: 2.5rem;
-  font-weight: bold;
-  text-shadow: 0 0 20px #ff0, 0 0 40px #ff0, 0 0 60px #ff0, 0 0 80px #ff0;
-  animation: bonus 2s ease-out infinite;
+  font-size: 3rem;
+  font-weight: 900;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.8),
+               0 0 20px rgba(255, 215, 0, 0.6),
+               0 0 30px rgba(255, 215, 0, 0.4);
+  animation: bonusBounce 1s ease-in-out infinite, bonusRotate 2s linear infinite;
+  z-index: 5;
+  letter-spacing: 3px;
 }
 
-.special_3,
-.special_2,
-.special_4 {
-  transition: transform 0.5s ease-in-out;
-}
-
-@keyframes bonus {
-  0% {
-    opacity: 0;
+@keyframes bonusGlow {
+  0%, 100% {
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.8), 0 0 60px rgba(255, 215, 0, 0.6),
+                0 0 90px rgba(255, 215, 0, 0.4), inset 0 0 30px rgba(255, 215, 0, 0.3);
   }
   50% {
-    opacity: 1;
-    transform: scale(1.3);
+    box-shadow: 0 0 50px rgba(255, 215, 0, 1), 0 0 100px rgba(255, 215, 0, 0.8),
+                0 0 150px rgba(255, 215, 0, 0.6), inset 0 0 50px rgba(255, 215, 0, 0.5);
+  }
+}
+
+@keyframes bonusPulse {
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.15);
+  }
+  60% {
+    transform: scale(1.05);
   }
   100% {
-    opacity: 0;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes bonusBounce {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+}
+
+@keyframes bonusRotate {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+  100% {
+    filter: hue-rotate(360deg);
+  }
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes textGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
   }
 }

@@ -83,7 +83,7 @@ function tagPercent(searchTag = false) {
         }
 
         e.style.border = "5px solid red";
-        e.style.backgroundImage = `linear-gradient(to right, ${colorFatto} ${per}%, ${colorPisto} ${per}%)`;
+        e.style.background = `linear-gradient(to right, ${colorFatto} ${per}%, ${colorPisto} ${per}%)`;
       }
     });
   });
@@ -134,7 +134,10 @@ function unhighlight(tag) {
 }
 
 function randomSelector() {
-  tags.forEach((el) => (el.style.backgroundImage = "unset"));
+  tags.forEach((el) => {
+    el.style.backgroundImage = "";
+    el.style.background = "";
+  });
   isGoing = true;
   drumRoll.play();
 
@@ -204,7 +207,8 @@ function removeClasses(e) {
 function assignPoint(evt) {
   evt.preventDefault();
   const { target } = evt;
-  target.style.backgroundImage = "unset";
+  target.style.backgroundImage = "";
+  target.style.background = "";
   target.classList.remove("selected");
 
   // Check for bonus multiplier
@@ -252,8 +256,13 @@ tags.forEach((e) => e.addEventListener("click", assignPoint));
 tags.forEach((e) => e.addEventListener("contextmenu", assignPoint));
 
 function checkForWinner() {
-  if (counterP + counterM >= 12) {
+  // Count how many circuits have been assigned
+  const assignedCircuits = document.querySelectorAll('.pistoWon, .matteoWon').length;
+
+  // Check if all 12 circuits have been assigned
+  if (assignedCircuits >= 12) {
     if (counterP == counterM) {
+      // Tie - trigger tiebreaker
       tags.forEach((e) => removeClasses(e));
       isEven = true;
       randomSelector();
@@ -267,9 +276,7 @@ function checkIfBonus() {
   const random = Math.floor(Math.random() * 100) + 1;
 
   if (
-    bonuscount >= 2 ||
-    disableBonus ||
-    totalWins.totalWinsPisto + totalWins.totalWinsFatto < 3
+    disableBonus
   ) {
     return 0;
   }
