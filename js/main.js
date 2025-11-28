@@ -1,4 +1,4 @@
-const version = "2.7.0";
+const version = "2.9.0";
 
 const textAreaEl = document.getElementById("textarea");
 const tagContainer = document.querySelector(".tags");
@@ -220,8 +220,9 @@ function assignPoint(evt) {
 function declareWinner() {
   const winner = counterP > counterM ? "Pisto!!" : "Fatto!!";
   clapping.play();
-  document.body.style.backgroundImage = "unset";
-  document.body.style.backgroundColor = "black";
+  document.body.style.backgroundImage = "url('./fireworks.jpg')";
+  document.body.style.backgroundSize = "cover";
+  document.body.style.backgroundPosition = "center";
   tagContainer.style.display = "none";
   subtitle.style.fontSize = "10rem";
   titleText.style.fontSize = "15rem";
