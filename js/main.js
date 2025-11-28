@@ -269,13 +269,13 @@ function checkIfBonus() {
     return 0;
   }
 
-  // X2 Bonus: 12% probability (1-12)
-  if (random >= 1 && random <= 12) {
+  // X2 Bonus: 15% probability (1-15)
+  if (random >= 1 && random <= 15) {
     return 2;
   }
 
-  // X3 Bonus: 6% probability (13-18)
-  if (random >= 13 && random <= 18) {
+  // X3 Bonus: 5% probability (16-20)
+  if (random >= 16 && random <= 20) {
     return 3;
   }
 
