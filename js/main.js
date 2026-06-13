@@ -1,6 +1,5 @@
 const version = "2.9.0";
 
-const textAreaEl = document.getElementById("textarea");
 const tagContainer = document.querySelector(".tags");
 const tags = document.querySelectorAll(".tag");
 const drumRoll = document.getElementById("drumRoll");
@@ -11,10 +10,11 @@ const jackpot = document.getElementById("jackpot");
 const pistoCounter = document.getElementById("puntiP");
 const fattoCounter = document.getElementById("puntiM");
 const subtitle = document.getElementById("subtitle");
-const title = document.getElementById("title");
 const titleText = document.getElementById("titleText");
-const btnEl = document.getElementById("btn");
 const versionEl = document.getElementById("version");
+
+// Numero totale di circuiti, derivato dai tag presenti in pagina.
+const totalCircuits = tags.length;
 
 versionEl.innerText = `v${version}`;
 let gameStarted = false;
@@ -118,12 +118,14 @@ function randomSelector() {
   tags.forEach((el) => {
     el.style.backgroundImage = "";
     el.style.background = "";
+    el.classList.remove("special_2", "special_3", "special_4");
   });
   isGoing = true;
   drumRoll.play();
 
   const interval = setInterval(() => {
     const randomTag = pickRandomTag();
+    if (!randomTag) return;
     highlight(randomTag);
     setTimeout(() => {
       unhighlight(randomTag);
@@ -134,6 +136,10 @@ function randomSelector() {
     clearInterval(interval);
     setTimeout(() => {
       const randomTag = pickRandomTag();
+      if (!randomTag) {
+        isGoing = false;
+        return;
+      }
 
       randomTag.classList.remove("unselected");
 
@@ -243,8 +249,8 @@ function checkForWinner() {
     return;
   }
 
-  // Check if all 12 circuits have been assigned
-  if (assignedCircuits >= 12) {
+  // Check if all circuits have been assigned
+  if (assignedCircuits >= totalCircuits) {
     if (counterP == counterM) {
       // Tie - trigger tiebreaker
       tags.forEach((e) => removeClasses(e));
