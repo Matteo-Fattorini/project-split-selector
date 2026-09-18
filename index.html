@@ -1,29 +1,35 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="it" dir="ltr">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Split Selector</title>
-    <!-- Custom CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap"
+    />
     <link rel="stylesheet" href="css/style.css" />
     <script src="js/data.js"></script>
-    <script defer src="js/main.js" charset="utf-8"></script>
+    <script defer src="js/main.js"></script>
   </head>
 
   <body>
+    <audio id="drumRoll" src="Drumroll.mp3" preload="auto"></audio>
+    <audio id="clapping" src="Clapping.mp3" preload="auto"></audio>
+    <audio id="jackpot" src="Jackpot.mp3" preload="auto"></audio>
+    <audio id="omg" src="Omg.mp3" preload="auto"></audio>
+    <audio id="superjackpot" src="SuperJackpot.mp3" preload="auto"></audio>
+
     <div id="container-selector">
-      <audio id="drumRoll" src="DrumRoll.mp3"></audio>
-      <audio id="clapping" src="Clapping.mp3"></audio>
-      <audio id="jackpot" src="Jackpot.mp3"></audio>
-      <audio id="omg" src="Omg.mp3"></audio>
-      <audio id="superjackpot" src="SuperJackpot.mp3"></audio>
-      <h1 id="title">
-        <span id="titleText">SPLIT SELECTOR</span>
-        <span id="version"></span>
+      <header id="header">
+        <h1 id="title"><span id="titleText">SPLIT SELECTOR</span></h1>
         <div id="subtitle">
-          Pisto: <span id="puntiP">0</span> Fatto: <span id="puntiM">0</span>
+          <span class="score score-pisto">Pisto <b id="puntiP">0</b></span>
+          <span class="score score-fatto">Fatto <b id="puntiM">0</b></span>
         </div>
-      </h1>
+      </header>
 
       <div class="container">
         <div class="tags">
@@ -41,6 +47,14 @@
           <span id="quarry" class="tag unselected">Quarry</span>
         </div>
       </div>
+
+      <footer id="footer">
+        <span id="hint">
+          <kbd>Invio</kbd> estrai · <kbd>Backspace</kbd> estrai senza bonus ·
+          <kbd>Click</kbd> punto Pisto · <kbd>Tasto destro</kbd> punto Fatto
+        </span>
+        <span id="version"></span>
+      </footer>
     </div>
   </body>
 </html>
